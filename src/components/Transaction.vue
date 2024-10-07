@@ -25,19 +25,24 @@
 </template>
 
 <script setup>
-import { defineProps, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
+import { useTransactionStore } from '../stores/store';
+import { storeToRefs } from 'pinia';
+const transactionStore = useTransactionStore();
+
+const { transactions } = storeToRefs(transactionStore);
 const currentPage = ref(1);
 const pageSize = ref(10);
 
 const paginatedTransactions = computed(() => {
-  return props.transactions.slice(
+  return transactions.value.slice(
     (currentPage.value - 1) * pageSize.value,
     currentPage.value * pageSize.value
   );
 });
 
 const totalPages = computed(() => {
-  return Math.ceil(props.transactions.length / pageSize.value);
+  return Math.ceil(transactions.value.length / pageSize.value);
 });
 
 const prevPage = () => {
@@ -52,12 +57,6 @@ const nextPage = () => {
   }
 }
 const emit = defineEmits(['transactionDeleted']);
-const props = defineProps({
-    transactions: {
-        type: Array,
-        required: true,
-    }
-});
 
 const deleteTransaction = (id) => {
     emit('transactionDeleted', id)

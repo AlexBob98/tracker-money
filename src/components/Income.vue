@@ -12,15 +12,9 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
-const props = defineProps({
-    income: {
-        type: Number,
-        required: true,
-    },
-    expense: {
-        type: Number,
-        required: true,
-    }
-})
+import { useTransactionStore } from '../stores/store';
+import { storeToRefs } from 'pinia';
+const transactionStore = useTransactionStore();
+
+const {income, expense} = storeToRefs(transactionStore);
 </script>

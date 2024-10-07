@@ -28,6 +28,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useToast } from 'vue-toastification';
+
 const transactionType = ref('income');
 
 const transactionDescription = ref('');
@@ -35,14 +36,7 @@ const transactionAmount = ref('');
 const emit = defineEmits(['transactionSubmit']);
 const toastService = useToast('');
 
-const createTransactionData = () => {
-  return {
-    text: transactionDescription.value,
-    amount: parseFloat(transactionAmount.value),
-  };
-};
-
-const onSubmit = () => {
+function onSubmit() {
   if (!transactionDescription.value || !transactionAmount.value) {
     toastService.error('Пожалуйста, заполните оба поля');
     return;
@@ -66,5 +60,5 @@ const onSubmit = () => {
   emit('transactionSubmit', transactionData);
   transactionDescription.value = '';
   transactionAmount.value = '';
-};
+}
 </script>

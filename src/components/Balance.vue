@@ -5,13 +5,11 @@
   </section>
 </template>
 
-<script>
-export default {
-  props: {
-    total: {
-      type: Number,
-      required: true,
-    },
-  },
-};
+<script setup>
+import { useTransactionStore } from '../stores/store';
+import { storeToRefs } from 'pinia';
+const transactionStore = useTransactionStore();
+
+const { total } = storeToRefs(transactionStore);
+
 </script>
